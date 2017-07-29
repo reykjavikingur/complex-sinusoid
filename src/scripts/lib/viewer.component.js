@@ -15,14 +15,7 @@ const Viewer = Vue.component('fwViewer', {
     mounted: function () {
         this.initializeCanvas();
 
-        /*
-        for (let angle = 0; angle <= TAU; angle += TAU / 8) {
-            let z = new Complex(0, angle).exp();
-            this.drawComplex(z);
-        }
-        //*/
-
-        this.drawSinusoid(new Complex(1, 0), 13);
+        this.drawSinusoid(new Complex(1.5, 0), 64);
 
     },
 
@@ -43,12 +36,27 @@ const Viewer = Vue.component('fwViewer', {
         },
 
         drawSinusoid: function(coefficient, resolution) {
+            let canvas = this.$refs.canvas;
+            let context = canvas.getContext('2d');
+            context.beginPath();
+
+            let points = [];
             resolution = Math.round(resolution);
             let angleIncrement = TAU / resolution;
             for (let angle = 0; angle <= TAU; angle += angleIncrement) {
                 let z = new Complex(0, angle).exp().multiply(coefficient);
-                this.drawComplex(z);
+                let point = this.convert(z);
+                points.push(point);
             }
+
+            let point = points.shift();
+            context.moveTo(point.x, point.y);
+            while (points.length > 0) {
+                let point = points.shift();
+                context.lineTo(point.x, point.y);
+            }
+
+            context.stroke();
         },
 
         drawPoint: function (point) {
