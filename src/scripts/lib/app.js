@@ -1,4 +1,5 @@
 require('./viewer.component');
+require('./composite-sinusoid.component');
 
 const template = `
 <fw-viewer></fw-viewer>
