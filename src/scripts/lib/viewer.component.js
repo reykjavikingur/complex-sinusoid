@@ -1,5 +1,4 @@
 const Complex = require('complex');
-const Sinusoid = require('./sinusoid');
 const CompositeSinusoid = require('./composite-sinusoid');
 
 const TAU = Math.PI * 2;
@@ -16,8 +15,6 @@ const Viewer = Vue.component('fwViewer', {
 
     mounted: function () {
         this.initializeCanvas();
-
-        //this.drawSinusoid(new Complex(1.5, 0), 9);
 
         this.drawCompositeSinusoid([
             Complex.fromPolar(1, 0),
@@ -44,18 +41,6 @@ const Viewer = Vue.component('fwViewer', {
             sinusoid.coefficients = coefficients;
             let samples = sinusoid.samples();
             let points = samples.map(sample => this.convert(sample));
-            this.drawPath(points);
-        },
-
-        drawSinusoid: function (coefficient, resolution) {
-            let sinusoid = new Sinusoid();
-            sinusoid.coefficient = coefficient;
-            sinusoid.resolution = resolution;
-            sinusoid.frequency = 2;
-
-            let samples = sinusoid.samples();
-            let points = samples.map(sample => this.convert(sample));
-
             this.drawPath(points);
         },
 
