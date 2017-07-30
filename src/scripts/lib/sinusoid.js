@@ -13,8 +13,8 @@ class Sinusoid {
     samples() {
         let list = [];
         let resolution = Math.max(4, Math.round(this.resolution));
-        let angleIncrement = TAU / resolution;
-        for (let angle = 0; angle <= TAU; angle += angleIncrement) {
+        for (let increment = 0; increment < resolution; increment++) {
+            let angle = TAU * increment / resolution;
             let power = new Complex(0, angle).multiply(this.frequency);
             let point = power.exp().multiply(this.coefficient);
             list.push(point);

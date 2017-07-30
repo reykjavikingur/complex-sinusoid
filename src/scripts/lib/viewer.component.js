@@ -1,5 +1,6 @@
 const Complex = require('complex');
 const Sinusoid = require('./sinusoid');
+const CompositeSinusoid = require('./composite-sinusoid');
 
 const TAU = Math.PI * 2;
 
@@ -16,7 +17,13 @@ const Viewer = Vue.component('fwViewer', {
     mounted: function () {
         this.initializeCanvas();
 
-        this.drawSinusoid(new Complex(1.5, 0), 9);
+        //this.drawSinusoid(new Complex(1.5, 0), 9);
+
+        this.drawCompositeSinusoid([
+            Complex.fromPolar(1, 0),
+            Complex.fromPolar(1, 0.125 * TAU),
+            Complex.fromPolar(1, 0.8 * TAU)
+        ], 63);
 
     },
 
@@ -31,12 +38,16 @@ const Viewer = Vue.component('fwViewer', {
             context.fillRect(0, 0, canvas.width, canvas.height);
         },
 
-        drawComplex: function (c) {
-            let point = this.convert(c);
-            this.drawPoint(point);
+        drawCompositeSinusoid: function (coefficients, resolution) {
+            let sinusoid = new CompositeSinusoid();
+            sinusoid.resolution = resolution;
+            sinusoid.coefficients = coefficients;
+            let samples = sinusoid.samples();
+            let points = samples.map(sample => this.convert(sample));
+            this.drawPath(points);
         },
 
-        drawSinusoid: function(coefficient, resolution) {
+        drawSinusoid: function (coefficient, resolution) {
             let sinusoid = new Sinusoid();
             sinusoid.coefficient = coefficient;
             sinusoid.resolution = resolution;
@@ -45,15 +56,20 @@ const Viewer = Vue.component('fwViewer', {
             let samples = sinusoid.samples();
             let points = samples.map(sample => this.convert(sample));
 
+            this.drawPath(points);
+        },
+
+        drawPath: function (points) {
             let canvas = this.$refs.canvas;
             let context = canvas.getContext('2d');
             context.beginPath();
-            let point = points.shift();
-            context.moveTo(point.x, point.y);
+            let firstPoint = points.shift();
+            context.moveTo(firstPoint.x, firstPoint.y);
             while (points.length > 0) {
                 let point = points.shift();
                 context.lineTo(point.x, point.y);
             }
+            context.lineTo(firstPoint.x, firstPoint.y);
             context.stroke();
         },
 
@@ -68,7 +84,7 @@ const Viewer = Vue.component('fwViewer', {
             // center of canvas corresponds to complex number (0, 0)
             let canvas = this.$refs.canvas;
             let canvasRadius = Math.min(canvas.width, canvas.height) / 2;
-            let scale = canvasRadius * 0.5;
+            let scale = canvasRadius * 0.3;
             let x = scale * z.real + canvasRadius;
             let y = -scale * z.im + canvasRadius;
             return {x: x, y: y};
