@@ -20,6 +20,7 @@ const template = `
     <div class="term-editor" v-if="hasSelectedTerm">
         <h2>Term {{selectedFrequency}}</h2>
         <fw-complex-number-input :value="selectedCoefficient" @input="updateCoefficient"></fw-complex-number-input>
+        <button @click="remove">Remove</button>
     </div>
 </div>
 `;
@@ -74,6 +75,15 @@ const component = Vue.component('fwTermListEditor', {
             this.terms.push(term);
             this.$emit('input', this.terms);
             this.selectedTerm = term;
+        },
+
+        remove: function () {
+            let i = this.terms.indexOf(this.selectedTerm);
+            if (i >= 0) {
+                this.terms.splice(i, 1);
+            }
+            this.selectedTerm = null;
+            this.$emit('input', this.terms);
         },
 
         updateCoefficient: function (coefficient) {
