@@ -2,8 +2,8 @@ const Complex = require('complex');
 
 const template = `
 <div class="complex-number-input">
-    <fw-angle-input v-model="angle"></fw-angle-input>
-    <fw-number-input v-model="magnitude"/>
+    <fw-angle-input :value="angle" @input="updateAngle"></fw-angle-input>
+    <fw-number-input :value="magnitude" @input="updateMagnitude"/>
 </div>
 `;
 
@@ -19,31 +19,28 @@ const component = Vue.component('fwComplexNumberInput', {
     template: template,
 
     data: function () {
-        return {
-            angle: this.value ? this.value.angle() : 0,
-            magnitude: this.value ? this.value.magnitude() : 0
-        };
+        return {};
     },
 
-    watch: {
-        value: function (value) {
-            if (value) {
-                this.angle = value.angle();
-                this.magnitude = value.magnitude();
-            }
+    computed: {
+        angle: function () {
+            return this.value ? this.value.angle() : 0;
         },
-        angle: function (angle) {
-            this.update(this.magnitude, angle);
-        },
-        magnitude: function (magnitude) {
-            this.update(magnitude, this.angle);
+        magnitude: function () {
+            return this.value ? this.value.magnitude() : 0;
         }
     },
 
     methods: {
+        updateAngle: function (angle) {
+            this.update(this.magnitude, angle);
+        },
+        updateMagnitude: function (magnitude) {
+            this.update(magnitude, this.angle);
+        },
         update: function (magnitude, angle) {
-            if (differ(magnitude, this.value.magnitude()) || differ(angle, this.value.angle())) {
-                let newValue = Complex.fromPolar(magnitude, angle);
+            let newValue = Complex.fromPolar(magnitude, angle);
+            if (differ(newValue.magnitude(), this.magnitude) || differ(newValue.angle(), this.angle)) {
                 this.$emit('input', newValue);
             }
         }

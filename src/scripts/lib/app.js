@@ -4,12 +4,12 @@ require('./composite-sinusoid.component');
 require('./angle-input.component');
 require('./number-input.component');
 require('./complex-number-input.component');
+require('./term-list-editor.component');
 
 const template = `
 <div class="app">
 <fw-viewer></fw-viewer>
-<fw-complex-number-input v-model="exampleComplex"></fw-complex-number-input>
-<span>exampleComplex = {{exampleComplex}}</span>
+<fw-term-list-editor :value="exampleTerms"></fw-term-list-editor>
 </div>
 `;
 
@@ -18,7 +18,7 @@ let app = new Vue({
     template: template,
     data: function () {
         return {
-            exampleComplex: Complex.fromPolar(1, 0)
+            exampleTerms: []
         };
     }
 });
