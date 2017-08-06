@@ -8,7 +8,7 @@ const template = `
 
 let component = Vue.component('fwCompositeSinusoid', {
 
-    props: ['coefficients'],
+    props: ['terms'],
 
     template: template,
 
@@ -17,10 +17,10 @@ let component = Vue.component('fwCompositeSinusoid', {
     },
 
     watch: {
-        coefficients: function (coefficients) {
+        terms: function (terms) {
             this.initializeCanvas();
-            if (coefficients) {
-                this.drawCompositeSinusoid(coefficients, 63);
+            if (terms) {
+                this.drawCompositeSinusoid(terms, 63);
             }
         }
     },
@@ -36,10 +36,10 @@ let component = Vue.component('fwCompositeSinusoid', {
             context.fillRect(0, 0, canvas.width, canvas.height);
         },
 
-        drawCompositeSinusoid: function (coefficients, resolution) {
+        drawCompositeSinusoid: function (terms, resolution) {
             let sinusoid = new CompositeSinusoid();
             sinusoid.resolution = resolution;
-            sinusoid.coefficients = coefficients;
+            sinusoid.terms = terms;
             let samples = sinusoid.samples();
             let points = samples.map(sample => this.convert(sample));
             this.drawPath(points);

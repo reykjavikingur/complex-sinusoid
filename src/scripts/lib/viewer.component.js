@@ -4,7 +4,7 @@ const TAU = Math.PI * 2;
 
 const template = `
 <div class="viewer">
-    <fw-composite-sinusoid :coefficients="coefficients"></fw-composite-sinusoid>
+    <fw-composite-sinusoid :terms="terms"></fw-composite-sinusoid>
 </div>
 `;
 
@@ -14,7 +14,7 @@ const Viewer = Vue.component('fwViewer', {
 
     data: function () {
         return {
-            coefficients: null
+            terms: null
         }
     },
 
@@ -26,11 +26,11 @@ const Viewer = Vue.component('fwViewer', {
 
         let animate = () => {
             requestAnimationFrame(animate);
-            this.coefficients = [
-                Complex.fromPolar(1, 0),
-                Complex.fromPolar(1, theta1),
-                Complex.fromPolar(1, theta2),
-                Complex.fromPolar(1, theta3)
+            this.terms = [
+                {frequency: 1, coefficient: Complex.fromPolar(1, 0)},
+                {frequency: 2, coefficient: Complex.fromPolar(1, theta1)},
+                {frequency: 3, coefficient: Complex.fromPolar(1, theta2)},
+                {frequency: 4, coefficient: Complex.fromPolar(1, theta3)},
             ];
             theta1 += delta1;
             theta2 += delta2;

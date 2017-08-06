@@ -28,7 +28,10 @@ class CompositeSinusoid {
 
     constructor() {
         this.resolution = 25;
-        this.coefficients = [new Complex(1, 0)];
+        this.terms = [{
+            frequency: 1,
+            coefficient: Complex.from(1, 0)
+        }];
     }
 
     samples() {
@@ -38,9 +41,9 @@ class CompositeSinusoid {
         for (let index = 0; index < this.resolution; index++) {
             list.push(new Complex(0, 0));
         }
-        for (let index in this.coefficients) {
-            sinusoid.frequency = Number(index) + 1;
-            sinusoid.coefficient = this.coefficients[index];
+        for (let index in this.terms) {
+            sinusoid.frequency = this.terms[index].frequency;
+            sinusoid.coefficient = this.terms[index].coefficient;
             let samples = sinusoid.samples();
             for (let sampleIndex in samples) {
                 list[sampleIndex] = list[sampleIndex].add(samples[sampleIndex]);
