@@ -36,7 +36,7 @@ const component = Vue.component('fwTermListEditor', {
             frequency: 0,
             coefficient: null,
             terms: [],
-            selectedTerm: null
+            selectedFrequency: 0
         };
     },
 
@@ -49,8 +49,10 @@ const component = Vue.component('fwTermListEditor', {
             return exists && !found;
         },
 
-        selectedFrequency: function () {
-            return this.selectedTerm ? this.selectedTerm.frequency : '';
+        selectedTerm: function () {
+            return this.terms.find(term => {
+                return term.frequency === this.selectedFrequency;
+            });
         },
 
         selectedCoefficient: function () {
@@ -73,8 +75,8 @@ const component = Vue.component('fwTermListEditor', {
                 coefficient: Complex.fromPolar(0, 0)
             };
             this.terms.push(term);
-            this.$emit('input', this.terms);
-            this.selectedTerm = term;
+            this.selectedFrequency = term.frequency;
+            this.updateTerms();
         },
 
         remove: function () {
@@ -82,17 +84,27 @@ const component = Vue.component('fwTermListEditor', {
             if (i >= 0) {
                 this.terms.splice(i, 1);
             }
-            this.selectedTerm = null;
-            this.$emit('input', this.terms);
+            this.selectedFrequency = 0;
+            this.updateTerms();
         },
 
         updateCoefficient: function (coefficient) {
             this.selectedTerm.coefficient = coefficient;
-            this.$emit('input', this.terms);
+            this.updateTerms();
         },
 
         selectTerm: function (term) {
-            this.selectedTerm = term;
+            this.selectedFrequency = term.frequency;
+        },
+
+        updateTerms: function () {
+            this.terms = this.terms.map(term => {
+                return {
+                    frequency: term.frequency,
+                    coefficient: new Complex(term.coefficient.real, term.coefficient.im)
+                }
+            });
+            this.$emit('input', this.terms);
         }
 
     }

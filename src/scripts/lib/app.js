@@ -8,8 +8,8 @@ require('./term-list-editor.component');
 
 const template = `
 <div class="app">
-<fw-viewer></fw-viewer>
-<fw-term-list-editor :value="exampleTerms"></fw-term-list-editor>
+<fw-composite-sinusoid :terms="exampleTerms"></fw-composite-sinusoid>
+<fw-term-list-editor v-model="exampleTerms"></fw-term-list-editor>
 </div>
 `;
 
