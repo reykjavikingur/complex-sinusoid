@@ -35,7 +35,7 @@ let component = Vue.component('fwCompositeSinusoid', {
 
     methods: {
 
-        receiveTerms: function(terms) {
+        receiveTerms: function (terms) {
             this.initializeCanvas(this.canvasSize || DEFAULT_CANVAS_SIZE);
             if (terms) {
                 this.drawCompositeSinusoid(terms, this.resolution || DEFAULT_RESOLUTION);
@@ -61,7 +61,9 @@ let component = Vue.component('fwCompositeSinusoid', {
         },
 
         drawPath: function (points, resolution) {
-            let color = Color({h: 0, s: 100, l:50});
+            let hue = 0;
+            let hueDelta = 360 / resolution;
+            let color = this.createColor(hue);
             let canvas = this.$refs.canvas;
             let context = canvas.getContext('2d');
             for (let i = 0; i < points.length; i++) {
@@ -70,11 +72,11 @@ let component = Vue.component('fwCompositeSinusoid', {
                 context.beginPath();
                 context.moveTo(point.x, point.y);
                 context.strokeStyle = color.rgb().string();
-                //console.log('drawing color', context.strokeStyle);
                 context.lineTo(nextPoint.x, nextPoint.y);
                 context.stroke();
                 context.closePath();
-                color = color.rotate(360 / resolution);
+                hue += hueDelta;
+                color = this.createColor(hue);
             }
         },
 
@@ -88,6 +90,13 @@ let component = Vue.component('fwCompositeSinusoid', {
             let x = scale * z.real + canvasRadius;
             let y = -scale * z.im + canvasRadius;
             return {x: x, y: y};
+        },
+
+        createColor: function (hue) {
+            let color = Color({h: hue, s: 100, l: 50});
+            let lum = color.luminosity();
+            color = color.lighten(0.5 - lum * 0.8);
+            return color;
         }
 
     },
