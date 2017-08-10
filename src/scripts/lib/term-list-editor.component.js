@@ -27,6 +27,9 @@ const template = `
 
 const component = Vue.component('fwTermListEditor', {
 
+    /**
+     * value : Array<{frequency: number, coefficient: Complex}>
+     */
     props: ['value'],
 
     template: template,
@@ -35,7 +38,7 @@ const component = Vue.component('fwTermListEditor', {
         return {
             frequency: 0,
             coefficient: null,
-            terms: [],
+            terms: this.value || [],
             selectedFrequency: 0
         };
     },

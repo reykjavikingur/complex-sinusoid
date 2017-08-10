@@ -11,24 +11,32 @@ const DEFAULT_RESOLUTION = 63;
 
 let component = Vue.component('fwCompositeSinusoid', {
 
+    /**
+     * terms : Array<{frequency: number, coefficient: Complex}>
+     * resolution : number
+     */
     props: ['terms', 'resolution'],
 
     template: template,
 
     mounted: function () {
-        this.initializeCanvas();
+        this.receiveTerms(this.terms);
     },
 
     watch: {
         terms: function (terms) {
-            this.initializeCanvas();
-            if (terms) {
-                this.drawCompositeSinusoid(terms, this.resolution || DEFAULT_RESOLUTION);
-            }
+            this.receiveTerms(terms);
         }
     },
 
     methods: {
+
+        receiveTerms: function(terms) {
+            this.initializeCanvas();
+            if (terms) {
+                this.drawCompositeSinusoid(terms, this.resolution || DEFAULT_RESOLUTION);
+            }
+        },
 
         initializeCanvas: function () {
             let canvas = this.$refs.canvas;

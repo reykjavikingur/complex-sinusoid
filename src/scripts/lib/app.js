@@ -1,5 +1,4 @@
 const Complex = require('complex');
-require('./viewer.component');
 require('./composite-sinusoid.component');
 require('./angle-input.component');
 require('./number-input.component');
@@ -18,7 +17,12 @@ let app = new Vue({
     template: template,
     data: function () {
         return {
-            exampleTerms: []
+            exampleTerms: [
+                {
+                    frequency: 1,
+                    coefficient: Complex.fromPolar(1, 0)
+                }
+            ]
         };
     }
 });
