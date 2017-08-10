@@ -8,7 +8,7 @@ require('./term-list-editor.component');
 
 const template = `
 <div class="app">
-<fw-composite-sinusoid :terms="exampleTerms"></fw-composite-sinusoid>
+<fw-composite-sinusoid :terms="exampleTerms" :resolution="256"></fw-composite-sinusoid>
 <fw-term-list-editor v-model="exampleTerms"></fw-term-list-editor>
 </div>
 `;

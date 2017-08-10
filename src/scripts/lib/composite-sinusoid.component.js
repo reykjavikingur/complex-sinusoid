@@ -7,9 +7,11 @@ const template = `
 </div>
 `;
 
+const DEFAULT_RESOLUTION = 63;
+
 let component = Vue.component('fwCompositeSinusoid', {
 
-    props: ['terms'],
+    props: ['terms', 'resolution'],
 
     template: template,
 
@@ -21,7 +23,7 @@ let component = Vue.component('fwCompositeSinusoid', {
         terms: function (terms) {
             this.initializeCanvas();
             if (terms) {
-                this.drawCompositeSinusoid(terms, 63);
+                this.drawCompositeSinusoid(terms, this.resolution || DEFAULT_RESOLUTION);
             }
         }
     },
