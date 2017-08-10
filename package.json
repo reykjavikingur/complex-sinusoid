@@ -16,6 +16,7 @@
     "babelify": "^7.3.0",
     "browser-sync": "^2.18.8",
     "browserify": "^14.3.0",
+    "color": "^2.0.0",
     "complex": "^3.0.1",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",

@@ -1,4 +1,5 @@
 const CompositeSinusoid = require('./composite-sinusoid');
+const Color = require('color');
 
 const template = `
 <div class="composite-sinusoid">
@@ -42,21 +43,25 @@ let component = Vue.component('fwCompositeSinusoid', {
             sinusoid.terms = terms;
             let samples = sinusoid.samples();
             let points = samples.map(sample => this.convert(sample));
-            this.drawPath(points);
+            this.drawPath(points, resolution);
         },
 
-        drawPath: function (points) {
+        drawPath: function (points, resolution) {
+            let color = Color({h: 0, s: 100, l:50});
             let canvas = this.$refs.canvas;
             let context = canvas.getContext('2d');
-            context.beginPath();
-            let firstPoint = points.shift();
-            context.moveTo(firstPoint.x, firstPoint.y);
-            while (points.length > 0) {
-                let point = points.shift();
-                context.lineTo(point.x, point.y);
+            for (let i = 0; i < points.length; i++) {
+                let point = points[i];
+                let nextPoint = points[(i + 1) % points.length];
+                context.beginPath();
+                context.moveTo(point.x, point.y);
+                context.strokeStyle = color.rgb().string();
+                //console.log('drawing color', context.strokeStyle);
+                context.lineTo(nextPoint.x, nextPoint.y);
+                context.stroke();
+                context.closePath();
+                color = color.rotate(360 / resolution);
             }
-            context.lineTo(firstPoint.x, firstPoint.y);
-            context.stroke();
         },
 
         convert: function (z) {
