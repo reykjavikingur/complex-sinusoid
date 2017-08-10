@@ -1,8 +1,9 @@
 .table {
-	display: flex;
+	display: block;
 	.row {
-		display: inline-flex;
+		display: block;
 		.cell {
+			display: inline-block;
 			margin: 2px;
 		}
 	}

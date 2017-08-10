@@ -6,7 +6,7 @@ const template = `
         <div class="cell" v-for="cell in row">
             <fw-composite-sinusoid 
                 :terms="cell" 
-                :resolution="256" 
+                :resolution="128" 
                 :canvas-size="100"
                 :zoom-factor="0.4"
             ></fw-composite-sinusoid>
@@ -25,17 +25,29 @@ function showTable(selector) {
 
         data: function () {
             return {
-                table: [
-                    // first row
-                    [
-                        this.createTerms(1, 2),
-                        this.createTerms(1, 3)
-                    ]
-                ]
+                table: this.createTable(10)
             };
         },
 
         methods: {
+
+            createTable: function(f) {
+                let table = [];
+                for (let k = 1; k <= f; k++) {
+                    let row = this.createRow(k, f);
+                    table.push(row);
+                }
+                return table;
+            },
+
+            createRow: function(f1, f2max) {
+                let row = [];
+                for (let f2 = 1; f2 <= f2max; f2++) {
+                    let cell = this.createTerms(f1, f2);
+                    row.push(cell);
+                }
+                return row;
+            },
 
             createTerms: function(f1, f2){
                 return [
