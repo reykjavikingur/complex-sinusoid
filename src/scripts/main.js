@@ -1,3 +1,1 @@
-const app = require('./lib/app');
-
-console.log('starting main');
+window.app = require('./lib/app');
