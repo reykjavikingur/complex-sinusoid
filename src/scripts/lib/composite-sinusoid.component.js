@@ -8,14 +8,18 @@ const template = `
 `;
 
 const DEFAULT_RESOLUTION = 63;
+const DEFAULT_CANVAS_SIZE = 256;
+const DEFAULT_ZOOM_FACTOR = 0.6;
 
 let component = Vue.component('fwCompositeSinusoid', {
 
     /**
      * terms : Array<{frequency: number, coefficient: Complex}>
      * resolution : number
+     * canvasSize : number
+     * zoomFactor : number
      */
-    props: ['terms', 'resolution'],
+    props: ['terms', 'resolution', 'canvasSize', 'zoomFactor'],
 
     template: template,
 
@@ -32,16 +36,16 @@ let component = Vue.component('fwCompositeSinusoid', {
     methods: {
 
         receiveTerms: function(terms) {
-            this.initializeCanvas();
+            this.initializeCanvas(this.canvasSize || DEFAULT_CANVAS_SIZE);
             if (terms) {
                 this.drawCompositeSinusoid(terms, this.resolution || DEFAULT_RESOLUTION);
             }
         },
 
-        initializeCanvas: function () {
+        initializeCanvas: function (size) {
             let canvas = this.$refs.canvas;
-            canvas.width = 256;
-            canvas.height = 256;
+            canvas.width = size;
+            canvas.height = size;
             let context = canvas.getContext('2d');
             context.fillStyle = 'rgb(255, 255, 255)';
             context.fillRect(0, 0, canvas.width, canvas.height);
@@ -77,9 +81,10 @@ let component = Vue.component('fwCompositeSinusoid', {
         convert: function (z) {
             // complex number (0, 0) corresponds to center of canvas
             // center of canvas corresponds to complex number (0, 0)
+            let zoomFactor = this.zoomFactor || DEFAULT_ZOOM_FACTOR;
             let canvas = this.$refs.canvas;
             let canvasRadius = Math.min(canvas.width, canvas.height) / 2;
-            let scale = canvasRadius * 0.3;
+            let scale = canvasRadius * zoomFactor;
             let x = scale * z.real + canvasRadius;
             let y = -scale * z.im + canvasRadius;
             return {x: x, y: y};
