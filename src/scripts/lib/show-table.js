@@ -3,10 +3,13 @@ const Complex = require('complex');
 const BALANCE = 1;
 const CROSS_FREQUENCY = 0;
 const MIN_RESOLUTION = 48;
+const NUM_ROWS = 10;
 
 const template = `
 <div class="table">
-    <div v-if="crossFrequency">cross frequency: {{crossFrequency}}</div>
+    <div class="controls">
+        Cross Frequency: <input type="number" v-model="crossFrequency" step="1" min="0" max="100" />
+    </div>
     <div class="row" v-for="row in table">
         <div class="cell" 
             v-for="cell in row" 
@@ -37,12 +40,27 @@ function showTable(selector) {
                 balance: BALANCE,
                 crossFrequency: CROSS_FREQUENCY,
                 minResolution: MIN_RESOLUTION,
+                numRows: NUM_ROWS,
                 table: null
             };
         },
 
-        mounted: function() {
-            this.table = this.createTable(10);
+        mounted: function () {
+            this.table = this.createTable(this.numRows);
+        },
+
+        watch: {
+
+            balance: function(value) {
+                // TODO update table elements in place rather than recreating entire array
+                this.table = this.createTable(this.numRows);
+            },
+
+            crossFrequency: function(value) {
+                // TODO update table elements in place rather than recreating entire array
+                this.table = this.createTable(this.numRows);
+            }
+
         },
 
         methods: {
@@ -67,11 +85,11 @@ function showTable(selector) {
 
             createTerms: function (f1, f2) {
                 let terms = [];
-                let m1 = this.balance;
+                let m1 = parseFloat(this.balance);
                 let m2 = 1 / m1;
                 terms.push(this.createTerm(f1, m1, 0));
                 terms.push(this.createTerm(f2, m2, 0));
-                let extra = this.crossFrequency;
+                let extra = parseInt(this.crossFrequency);
                 if (extra) {
                     terms.push(this.createTerm(extra, 1, 0));
                 }
