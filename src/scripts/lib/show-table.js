@@ -1,7 +1,8 @@
 const Complex = require('complex');
 
 const BALANCE = 1;
-const THIRD_FREQUENCY = 0;
+const CROSS_FREQUENCY = 0;
+const MIN_RESOLUTION = 48;
 
 const template = `
 <div class="table">
@@ -14,7 +15,7 @@ const template = `
             >
             <fw-composite-sinusoid 
                 :terms="cell" 
-                :resolution="128" 
+                :resolution="minResolution * Math.max(cell[0].frequency, cell[1].frequency)" 
                 :canvas-size="100"
                 :zoom-factor="0.85 / cell.length"
             ></fw-composite-sinusoid>
@@ -34,7 +35,8 @@ function showTable(selector) {
         data: function () {
             return {
                 balance: BALANCE,
-                crossFrequency: THIRD_FREQUENCY,
+                crossFrequency: CROSS_FREQUENCY,
+                minResolution: MIN_RESOLUTION,
                 table: null
             };
         },
