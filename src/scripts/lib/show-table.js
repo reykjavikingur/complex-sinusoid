@@ -3,7 +3,11 @@ const Complex = require('complex');
 const template = `
 <div class="table">
     <div class="row" v-for="row in table">
-        <div class="cell" v-for="cell in row">
+        <div class="cell" 
+            v-for="cell in row" 
+            :title="cell[0].frequency + ':' + cell[1].frequency"
+            :style="{ width: (100 / row.length) + '%' }"
+            >
             <fw-composite-sinusoid 
                 :terms="cell" 
                 :resolution="128" 
@@ -31,7 +35,7 @@ function showTable(selector) {
 
         methods: {
 
-            createTable: function(f) {
+            createTable: function (f) {
                 let table = [];
                 for (let k = 1; k <= f; k++) {
                     let row = this.createRow(k, f);
@@ -40,7 +44,7 @@ function showTable(selector) {
                 return table;
             },
 
-            createRow: function(f1, f2max) {
+            createRow: function (f1, f2max) {
                 let row = [];
                 for (let f2 = 1; f2 <= f2max; f2++) {
                     let cell = this.createTerms(f1, f2);
@@ -49,7 +53,7 @@ function showTable(selector) {
                 return row;
             },
 
-            createTerms: function(f1, f2){
+            createTerms: function (f1, f2) {
                 return [
                     {
                         frequency: f1,

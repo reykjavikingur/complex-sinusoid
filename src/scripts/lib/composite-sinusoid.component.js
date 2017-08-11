@@ -95,7 +95,7 @@ let component = Vue.component('fwCompositeSinusoid', {
         createColor: function (hue) {
             let color = Color({h: hue, s: 100, l: 50});
             let lum = color.luminosity();
-            color = color.lighten(0.5 - lum * 0.8);
+            color = color.lighten(0.5 - lum * 0.9);
             return color;
         }
 
