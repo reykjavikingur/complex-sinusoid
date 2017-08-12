@@ -7,6 +7,7 @@ const MIN_RESOLUTION = 48;
 const NUM_ROWS = 10;
 const ROW_START = 1;
 const ROW_STEP = 1;
+const NUM_COLS = 10;
 const COL_START = 1;
 const COL_STEP = 1;
 
@@ -15,6 +16,16 @@ const template = `
     <div class="controls">
         <div>Cross Frequency: <input type="number" v-model="crossFrequency" step="1" min="0" max="100" /></div>
         <div>Balance: <input type="number" v-model="balance" step="0.1" min="0" max="100" /></div>
+        <div>
+            Row 
+            start <input type="number" v-model="rowStart" min="1" step="1" max="10000" /> 
+            step <input type="number" v-model="rowStep" min="0" step="1" max="10000" />
+        </div>
+        <div>
+            Column
+            start <input type="number" v-model="colStart" min="1" step="1" max="10000" /> 
+            step <input type="number" v-model="colStep" min="0" step="1" max="10000" />
+        </div>
     </div>
     <div class="row" v-for="row in table">
         <div class="cell" 
@@ -47,6 +58,7 @@ function showTable(selector) {
                 crossFrequency: CROSS_FREQUENCY,
                 minResolution: MIN_RESOLUTION,
                 numRows: NUM_ROWS,
+                numCols: NUM_COLS,
                 table: null,
                 rowStart: ROW_START,
                 rowStep: ROW_STEP,
@@ -61,11 +73,22 @@ function showTable(selector) {
 
         watch: {
 
-            balance: function (value) {
+            balance: function () {
                 this.updateTable();
             },
-
-            crossFrequency: function (value) {
+            crossFrequency: function () {
+                this.updateTable();
+            },
+            rowStart: function () {
+                this.updateTable();
+            },
+            rowStep: function () {
+                this.updateTable();
+            },
+            colStart: function () {
+                this.updateTable();
+            },
+            colStep: function () {
                 this.updateTable();
             }
 
@@ -79,8 +102,11 @@ function showTable(selector) {
             },
 
             createTable: function () {
+                let rowStart = parseFloat(this.rowStart);
+                let rowStep = parseFloat(this.rowStep);
                 let table = [];
-                for (let rowIndex = this.rowStart; rowIndex <= this.numRows; rowIndex += this.rowStep) {
+                for (let i = 0; i < this.numRows; i++) {
+                    let rowIndex = rowStart + i * rowStep;
                     let row = this.createRow(rowIndex);
                     table.push(row);
                 }
@@ -88,9 +114,11 @@ function showTable(selector) {
             },
 
             createRow: function (rowIndex) {
-                let numCols = this.numRows;
+                let colStart = parseFloat(this.colStart);
+                let colStep = parseFloat(this.colStep);
                 let row = [];
-                for (let colIndex = this.colStart; colIndex <= numCols; colIndex += this.colStep) {
+                for (let i = 0; i < this.numRows; i++) {
+                    let colIndex = colStart + i * colStep;
                     let cell = this.createTerms(rowIndex, colIndex);
                     row.push(cell);
                 }
@@ -117,7 +145,7 @@ function showTable(selector) {
                 };
             },
 
-            maxFrequency: function(cell) {
+            maxFrequency: function (cell) {
                 let frequencies = cell.map(term => term.frequency);
                 return Math.max.apply(Math, frequencies);
             }
