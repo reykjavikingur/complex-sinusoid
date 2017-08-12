@@ -71,19 +71,19 @@ function showTable(selector) {
             },
 
             createTable: function () {
-                let f = this.numRows;
                 let table = [];
-                for (let k = 1; k <= f; k++) {
-                    let row = this.createRow(k, f);
+                for (let rowIndex = 1; rowIndex <= this.numRows; rowIndex += 1) {
+                    let row = this.createRow(rowIndex);
                     table.push(row);
                 }
                 return table;
             },
 
-            createRow: function (f1, f2max) {
+            createRow: function (rowIndex) {
+                let numCols = this.numRows;
                 let row = [];
-                for (let f2 = 1; f2 <= f2max; f2++) {
-                    let cell = this.createTerms(f1, f2);
+                for (let colIndex = 1; colIndex <= numCols; colIndex += 1) {
+                    let cell = this.createTerms(rowIndex, colIndex);
                     row.push(cell);
                 }
                 return row;
