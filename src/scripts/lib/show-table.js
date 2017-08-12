@@ -1,7 +1,7 @@
 const Complex = require('complex');
 const ArrayUtil = require('./array-util');
 
-const BALANCE = 1;
+const BALANCE = 0.5;
 const CROSS_FREQUENCY = 0;
 const MIN_RESOLUTION = 48;
 const NUM_ROWS = 10;
@@ -37,7 +37,7 @@ const template = `
                 :terms="cell" 
                 :resolution="minResolution * maxFrequency(cell)" 
                 :canvas-size="100"
-                :zoom-factor="0.85 / cell.length"
+                :zoom-factor="0.85 * zoomFactor(cell)"
             ></fw-composite-sinusoid>
         </div>
     </div>
@@ -148,6 +148,13 @@ function showTable(selector) {
             maxFrequency: function (cell) {
                 let frequencies = cell.map(term => term.frequency);
                 return Math.max.apply(Math, frequencies);
+            },
+
+            zoomFactor: function(cell) {
+                let magnitudes = cell.map(term => term.coefficient.magnitude());
+                let sum = 0;
+                magnitudes.forEach(magnitude => sum += magnitude);
+                return 1 / sum;
             }
 
         }
