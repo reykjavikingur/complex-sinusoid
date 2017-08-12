@@ -1,4 +1,5 @@
 const Complex = require('complex');
+const ArrayUtil = require('./array-util');
 
 const BALANCE = 1;
 const CROSS_FREQUENCY = 0;
@@ -46,26 +47,30 @@ function showTable(selector) {
         },
 
         mounted: function () {
-            this.table = this.createTable(this.numRows);
+            this.table = this.createTable();
         },
 
         watch: {
 
-            balance: function(value) {
-                // TODO update table elements in place rather than recreating entire array
-                this.table = this.createTable(this.numRows);
+            balance: function (value) {
+                this.updateTable();
             },
 
-            crossFrequency: function(value) {
-                // TODO update table elements in place rather than recreating entire array
-                this.table = this.createTable(this.numRows);
+            crossFrequency: function (value) {
+                this.updateTable();
             }
 
         },
 
         methods: {
 
-            createTable: function (f) {
+            updateTable: function () {
+                let table = this.createTable();
+                ArrayUtil.copy(table, this.table);
+            },
+
+            createTable: function () {
+                let f = this.numRows;
                 let table = [];
                 for (let k = 1; k <= f; k++) {
                     let row = this.createRow(k, f);
