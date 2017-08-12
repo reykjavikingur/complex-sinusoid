@@ -9,7 +9,8 @@ const NUM_ROWS = 10;
 const template = `
 <div class="table">
     <div class="controls">
-        Cross Frequency: <input type="number" v-model="crossFrequency" step="1" min="0" max="100" />
+        <div>Cross Frequency: <input type="number" v-model="crossFrequency" step="1" min="0" max="100" /></div>
+        <div>Balance: <input type="number" v-model="balance" step="0.1" min="0" max="100" /></div>
     </div>
     <div class="row" v-for="row in table">
         <div class="cell" 
