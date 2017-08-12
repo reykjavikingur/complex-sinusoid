@@ -20,7 +20,7 @@ const template = `
             >
             <fw-composite-sinusoid 
                 :terms="cell" 
-                :resolution="minResolution * Math.max(cell[0].frequency, cell[1].frequency)" 
+                :resolution="minResolution * maxFrequency(cell)" 
                 :canvas-size="100"
                 :zoom-factor="0.85 / cell.length"
             ></fw-composite-sinusoid>
@@ -107,6 +107,11 @@ function showTable(selector) {
                     frequency: f,
                     coefficient: Complex.fromPolar(mag, angle)
                 };
+            },
+
+            maxFrequency: function(cell) {
+                let frequencies = cell.map(term => term.frequency);
+                return Math.max.apply(Math, frequencies);
             }
 
         }
