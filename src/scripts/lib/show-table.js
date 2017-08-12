@@ -1,7 +1,7 @@
 const Complex = require('complex');
 const ArrayUtil = require('./array-util');
 
-const BALANCE = 0.5;
+const BALANCE = 1;
 const CROSS_FREQUENCY = 0;
 const MIN_RESOLUTION = 48;
 const NUM_ROWS = 10;
@@ -36,7 +36,7 @@ const template = `
             <fw-composite-sinusoid 
                 :terms="cell" 
                 :resolution="minResolution * maxFrequency(cell)" 
-                :canvas-size="100"
+                :canvas-size="80"
                 :zoom-factor="0.85 * zoomFactor(cell)"
             ></fw-composite-sinusoid>
         </div>
