@@ -5,6 +5,10 @@ const BALANCE = 1;
 const CROSS_FREQUENCY = 0;
 const MIN_RESOLUTION = 48;
 const NUM_ROWS = 10;
+const ROW_START = 1;
+const ROW_STEP = 1;
+const COL_START = 1;
+const COL_STEP = 1;
 
 const template = `
 <div class="table">
@@ -43,7 +47,11 @@ function showTable(selector) {
                 crossFrequency: CROSS_FREQUENCY,
                 minResolution: MIN_RESOLUTION,
                 numRows: NUM_ROWS,
-                table: null
+                table: null,
+                rowStart: ROW_START,
+                rowStep: ROW_STEP,
+                colStart: COL_START,
+                colStep: COL_STEP
             };
         },
 
@@ -72,7 +80,7 @@ function showTable(selector) {
 
             createTable: function () {
                 let table = [];
-                for (let rowIndex = 1; rowIndex <= this.numRows; rowIndex += 1) {
+                for (let rowIndex = this.rowStart; rowIndex <= this.numRows; rowIndex += this.rowStep) {
                     let row = this.createRow(rowIndex);
                     table.push(row);
                 }
@@ -82,7 +90,7 @@ function showTable(selector) {
             createRow: function (rowIndex) {
                 let numCols = this.numRows;
                 let row = [];
-                for (let colIndex = 1; colIndex <= numCols; colIndex += 1) {
+                for (let colIndex = this.colStart; colIndex <= numCols; colIndex += this.colStep) {
                     let cell = this.createTerms(rowIndex, colIndex);
                     row.push(cell);
                 }
