@@ -1,0 +1,65 @@
+/* main styles */
+.angle-input {
+  user-select: none;
+}
+
+.term-list-editor .frequency-input {
+  width: 3em;
+}
+
+.term-list-editor .term-list .term {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.term-list-editor .term-list .term.selected {
+  background: #99c;
+}
+
+.term-list-editor .term-list .term:hover {
+  text-decoration: underline;
+}
+
+.table {
+  display: block;
+}
+
+.table .controls {
+  margin: 0 0 0.3em;
+}
+
+.table .controls input[type="number"] {
+  width: 3em;
+}
+
+.table .row {
+  display: block;
+  line-height: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.table .row .cell {
+  display: inline-block;
+  height: auto;
+  line-height: 0;
+  margin: 0;
+  width: 10%;
+}
+
+.table .row .cell .composite-sinusoid {
+  line-height: 0;
+  margin: 0;
+}
+
+.table .row .cell .composite-sinusoid canvas {
+  height: auto;
+  width: 100%;
+}
+
+body {
+  background-color: #e0e0e0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*# sourceMappingURL=main.css.map */

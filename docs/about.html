@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complex Sinusoids</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="assets/styles/main.css"/>
+</head>
+<body>
+<h1>Complex Sinusoid Explanation</h1>
+
+<p><a href="index.html">home</a> | <a href="table.html">table</a> | about</p>
+
+<h2>Background Information</h2>
+
+<p>
+    What is a <a href="https://en.wikipedia.org/wiki/Sine_wave">sinusoid</a>?
+    <br/>
+    Basically, it is a function of the form:
+    <br/>
+    <code>
+        f(x) = amplitude * sin(angular_frequency * x + phase)
+    </code>
+    <br/>
+    where <code>amplitude</code> is any real number, and <code>angular_frequency</code> is any real number,
+    and <code>phase</code> is a real number between 0 and 2*pi
+</p>
+
+<p>
+    What is a <a href="https://en.wikipedia.org/wiki/Negative_frequency#Sinusoids">complex sinusoid</a>?
+    <br/>
+    <a href="https://en.wikipedia.org/wiki/Euler%27s_formula">Euler's formula</a>
+    gives us the form of a sinusoid function whose range is the complex plane:
+    <br/>
+    <code>
+        f(x) = coefficient * e^(i * angular_frequency * x)
+    </code>
+    <br/>
+    where <code>e</code> is the exponential constant, <code>i</code> is the imaginary unit,
+    <code>coefficient</code> is any complex number, and <code>angular_frequency</code> is any real number.
+</p>
+
+<p>
+    A complex sinusoid is more compact than a real-valued sinusoid,
+    so it is simpler to work with.
+    Notice above how the complex sinusoid formula does not need a separate <code>phase</code> parameter?
+    That's because its <code>coefficient</code> is a complex number rather than a real number,
+    so it can encode both amplitude and phase.
+</p>
+
+<p>
+    A <a href="https://en.wikipedia.org/wiki/Fourier_series">Fourier series</a>
+    can represent any periodic function as a sum of sinusoids.
+    In this application I call a sum of complex sinusoids a "composite"
+    to emphasize the graphic representation that I give them.
+</p>
+
+<p>
+    Fourier analysis lets us represent <em>any</em> periodic function
+    as the weighted sum of complex sinusoidal harmonics, that is,
+    <br/>
+    <code>
+        f(x) = c1 * e^(i * x) + c2 * e^(2i * x) + c3 * e^(3i * x) + ...
+    </code>
+    <br/>
+    where <code>c1, c2</code>, etc. are the complex coefficients that are
+    "weighing" each harmonic.
+</p>
+
+<p>
+    A Fourier series may be infinite, but you can always approximate it
+    to sufficient precision with finitely many terms.
+    The Fourier transform of a periodic function will give you the right coefficients.
+    Alternatively, with this app, you can play around with your own arbitrary coefficients and
+    visualize the results.
+</p>
+
+<p>
+    If you don't think this is the coolest thing ever and totally love these visualizations,
+    then you must leave this site immediately and scrub its contents from your mind.
+</p>
+
+<hr/>
+Fork this on <a href="https://github.com/reykjavikingur/complex-sinusoid">Github</a>
+
+</body>
+</html>

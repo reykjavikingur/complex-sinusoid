@@ -1,0 +1,38 @@
+.table {
+  display: block;
+}
+
+.table .controls {
+  margin: 0 0 0.3em;
+}
+
+.table .controls input[type="number"] {
+  width: 3em;
+}
+
+.table .row {
+  display: block;
+  line-height: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.table .row .cell {
+  display: inline-block;
+  height: auto;
+  line-height: 0;
+  margin: 0;
+  width: 10%;
+}
+
+.table .row .cell .composite-sinusoid {
+  line-height: 0;
+  margin: 0;
+}
+
+.table .row .cell .composite-sinusoid canvas {
+  height: auto;
+  width: 100%;
+}
+
+/*# sourceMappingURL=table.css.map */

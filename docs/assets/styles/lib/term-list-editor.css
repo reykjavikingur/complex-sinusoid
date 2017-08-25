@@ -1,0 +1,18 @@
+.term-list-editor .frequency-input {
+  width: 3em;
+}
+
+.term-list-editor .term-list .term {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.term-list-editor .term-list .term.selected {
+  background: #99c;
+}
+
+.term-list-editor .term-list .term:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=term-list-editor.css.map */
