@@ -10,3 +10,6 @@ To set up this app and run it locally:
 * `npm install`
 * `npm start`
 
+## Demo
+
+https://reykjavikingur.github.io/complex-sinusoid/
